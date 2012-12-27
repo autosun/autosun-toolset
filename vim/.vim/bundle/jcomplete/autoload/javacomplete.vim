@@ -2250,16 +2250,18 @@ fu! s:DoGetTypeInfoForFQN(fqns, srcpath, ...)
     exe 'vimgrep /\s*' . s:RE_TYPE_DECL . '/jg ' . filepatterns
     for item in getqflist()
       if item.text !~ '^\s*\*\s\+'
-	let text = matchstr(s:Prune(item.text, -1), '\s*' . s:RE_TYPE_DECL)
-	if text != ''
-	  let subs = split(substitute(text, '\s*' . s:RE_TYPE_DECL, '\1;\2;\3', ''), ';', 1)
-	  let dirpath = fnamemodify(bufname(item.bufnr), ':p:h:gs?[\\/]\+?/?')
-	  let idents = dirs[dirpath].idents
-	  if index(idents, subs[2]) >= 0 && (subs[0] =~ '\C\<public\>' || dirpath == cwd)	" FIXME?
-	    let item.subs = subs
-	    let dirs[dirpath].qfitems = get(dirs[dirpath], 'qfitems', []) + [item]
-	  endif
-	endif
+        let text = matchstr(s:Prune(item.text, -1), '\s*' . s:RE_TYPE_DECL)
+        if text != ''
+          let subs = split(substitute(text, '\s*' . s:RE_TYPE_DECL, '\1;\2;\3', ''), ';', 1)
+          let dirpath = fnamemodify(bufname(item.bufnr), ':p:h:gs?[\\/]\+?/?')
+          if get(dirs, dirpath) != 0
+            let idents = dirs[dirpath].idents
+            if index(idents, subs[2]) >= 0 && (subs[0] =~ '\C\<public\>' || dirpath == cwd)	" FIXME?
+              let item.subs = subs
+              let dirs[dirpath].qfitems = get(dirs[dirpath], 'qfitems', []) + [item]
+            endif
+          endif
+        endif
       endif
     endfor
 
