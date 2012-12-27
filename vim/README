@@ -1,0 +1,11 @@
+Autosun's VIM setting
+
+The folder '.vim' contain plugin of VIM including:
+
+1) Pathogen: Autoload plugins in 'bundle' folder.
+2) EasyGrep: Easier to grep text in VIM.
+3) JavaComplete: Java auto-complete plugin.
+4) NerdTree: File browser.
+5) NerdTreeTabs: File browser with tabs.
+6) ShowMarks: Visualize VIM marks.
+
