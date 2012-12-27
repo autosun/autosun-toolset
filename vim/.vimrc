@@ -35,6 +35,10 @@ set number
 " setting Leader
 let mapleader = ","
 
+" setting auto complete notation when in .java .xml .c .cpp
+autocmd Filetype java,xml,c,cpp inoremap <buffer> " ""<ESC>i
+autocmd Filetype java,c,cpp inoremap <buffer> {<CR> {<ESC>o}<ESC>O
+
 " enable plugin
 filetype on
 filetype indent on
@@ -76,5 +80,5 @@ autocmd Filetype java set omnifunc=javacomplete#Complete
 autocmd Filetype java set completefunc=javacomplete#CompleteParamsInf
 inoremap <buffer> <C-X><C-U> <C-X><C-U><C-P>
 inoremap <buffer> <C-S-Space> <C-X><C-U><C-P>
-autocmd Filetype java inoremap <buffer> . .<C-X><C-O><C-P>
+autocmd Filetype java inoremap <buffer> <TAB> <C-X><C-O><C-P>
 
