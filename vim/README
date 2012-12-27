@@ -6,6 +6,9 @@ The folder '.vim' contain plugin of VIM including:
 2) EasyGrep: Easier to grep text in VIM.
 3) JavaComplete: Java auto-complete plugin.
 4) NerdTree: File browser.
+     URL: https://github.com/scrooloose/nerdtree
 5) NerdTreeTabs: File browser with tabs.
+     URL: https://github.com/jistr/vim-nerdtree-tabs
 6) ShowMarks: Visualize VIM marks.
+     URL: https://github.com/vim-scripts/ShowMarks
 
