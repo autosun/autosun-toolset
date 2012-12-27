@@ -1,4 +1,4 @@
 autosun-toolset
 ===============
 
-Toolset by autosun
+Autosun's toolset.
