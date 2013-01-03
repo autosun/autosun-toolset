@@ -11,4 +11,8 @@ The folder '.vim' contain plugin of VIM including:
      URL: https://github.com/jistr/vim-nerdtree-tabs
 6) ShowMarks: Visualize VIM marks.
      URL: https://github.com/vim-scripts/ShowMarks
+7) FuzzyFinder: Buffer/File/Command/Tag/etc explorer with fuzzy matching.
+     URL: http://www.vim.org/scripts/script.php?script_id=1984
+8) L9: Vim-script library
+     URL: http://www.vim.org/scripts/script.php?script_id=3252
 
