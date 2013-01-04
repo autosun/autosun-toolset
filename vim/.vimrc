@@ -82,3 +82,8 @@ inoremap <buffer> <C-X><C-U> <C-X><C-U><C-P>
 inoremap <buffer> <C-S-Space> <C-X><C-U><C-P>
 autocmd Filetype java inoremap <buffer> <TAB> <C-X><C-O><C-P>
 
+" # FuzzyFinder
+" Open file on new tab on pressing ENTER
+let g:fuf_keyOpenTabpage="<CR>"
+let g:fuf_keyOpen="<C-l>"
+
