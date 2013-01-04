@@ -86,4 +86,6 @@ autocmd Filetype java inoremap <buffer> <TAB> <C-X><C-O><C-P>
 " Open file on new tab on pressing ENTER
 let g:fuf_keyOpenTabpage="<CR>"
 let g:fuf_keyOpen="<C-l>"
+" Map key file search to F2
+nnoremap <silent> <F2> lbyw:FufCoverageFile <C-R>"<CR>
 
