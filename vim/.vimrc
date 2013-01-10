@@ -51,6 +51,11 @@ au BufNewFile,BufRead *.log set filetype=log
 highlight Pmenu ctermbg=yellow ctermfg=black
 highlight PmenuSel ctermbg=lightyellow ctermfg=black
 
+" Statusline
+set laststatus=2
+set statusline=%<%f\ %m%=\ %h%r\ %-19([%p%%]\ %3l,%02c%03V%)%y
+highlight StatusLine ctermfg=blue ctermbg=white
+
 " === plugin setting ===
 
 " # pathogen
