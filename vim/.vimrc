@@ -32,6 +32,12 @@ highlight Search ctermfg=gray ctermbg=darkblue
 " show line number
 set number
 
+" There is comment formation in VIM
+" But no useful to do following (Maybe it set earily)
+"set formatoptions-=r
+" Refer the following link to resolve it.
+" http://disp.cc/b/11-3Trd
+
 " setting Leader
 let mapleader = ","
 
