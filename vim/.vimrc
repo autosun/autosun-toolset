@@ -36,8 +36,10 @@ set number
 let mapleader = ","
 
 " setting auto complete notation when in .java .xml .c .cpp
-autocmd Filetype java,xml,c,cpp inoremap <buffer> " ""<ESC>i
-autocmd Filetype java,c,cpp inoremap <buffer> {<CR> {<ESC>o}<ESC>O
+"autocmd Filetype java,xml,c,cpp inoremap <buffer> " ""<ESC>i
+"autocmd Filetype java,c,cpp inoremap <buffer> {<CR> {<ESC>o}<ESC>O
+autocmd Filetype java,xml,c,cpp inoremap ' <c-r>=CompleteQuote("'")<CR>
+autocmd Filetype java,xml,c,cpp inoremap " <c-r>=CompleteQuote('"')<CR>
 
 " enable plugin
 filetype on
@@ -93,4 +95,26 @@ let g:fuf_keyOpenTabpage="<CR>"
 let g:fuf_keyOpen="<C-l>"
 " Map key file search to F2
 nnoremap <silent> <F2> lbyw:FufCoverageFile <C-R>"<CR>
+
+" === Define function ===
+
+" # auto-complete Quotation
+
+function! CompleteQuote(quote)
+    let ql = len(split(getline('.'), a:quote, 1))-1
+    let slen = len(split(strpart(getline("."), 0, col(".")-1), a:quote, 1))-1
+    let elen = len(split(strpart(getline("."), col(".")-1), a:quote, 1))-1
+    let isBefreQuote = getline('.')[col('.') - 1] == a:quote
+
+    if (ql%2)==1
+        " a:quote length is odd.
+        return a:quote
+    elseif ((slen%2)==1 && (elen%2)==1 && !isBefreQuote) || ((slen%2)==0 && (elen%2)==0)
+        return a:quote . a:quote . "\<Left>"
+    elseif isBefreQuote
+        return "\<Right>"
+    else
+        return a:quote . a:quote . "\<Left>"
+    endif
+endfunction
 
