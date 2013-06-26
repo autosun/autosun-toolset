@@ -35,6 +35,9 @@
 import os, sys, re, StringIO
 import fcntl, termios, struct, getopt
 
+# Native show message, default off
+native = 0
+
 # unpack the current terminal width/height
 data = fcntl.ioctl(sys.stdout.fileno(), termios.TIOCGWINSZ, '1234')
 HEIGHT, WIDTH = struct.unpack('hh',data)
@@ -69,7 +72,7 @@ def indent_wrap(message, indent=0, width=80):
         else:
             next = min(current + wrap_area, len(message))
         messagebuf.write(message[current:next])
-        if next < len(message):
+        if next < len(message) and native == 0:
             messagebuf.write("\n%s" % (" " * indent))
         current = next
     return messagebuf.getvalue()
@@ -101,10 +104,11 @@ RULES = {
     #re.compile(r"([\w\.@]+)=([\w\.@]+)"): r"%s\1%s=%s\2%s" % (format(fg=BLUE), format(fg=GREEN), format(fg=BLUE), format(reset=True)),
 }
 
+TIME_WIDTH = 20
 PROCESS_WIDTH = 14 # 8 or -1
 LABEL_WIDTH = 20
 TAGTYPE_WIDTH = 3
-HEADER_SIZE = TAGTYPE_WIDTH + 1 + PROCESS_WIDTH + 1 + LABEL_WIDTH + 1
+HEADER_SIZE = TAGTYPE_WIDTH + 1 + PROCESS_WIDTH + 1 + LABEL_WIDTH + 1 + TIME_WIDTH + 1
 
 TAGTYPES = {
     "V": "%s%s%s " % (format(fg=WHITE, bg=BLACK), "V".center(TAGTYPE_WIDTH), format(reset=True)),
@@ -118,7 +122,7 @@ TAGTYPES = {
 retag = re.compile("^(\d*-\d*)\s+(\d*:\d*:\d*\.\d*)\s+(\d*)\s+(\d*)\s+([A-Z])\s+([\w\-\.]*)\s*:\s(\s*\w*)(.*)$")
 
 # analysis argv parameters
-opts, args = getopt.getopt(sys.argv[1:], "o:")
+opts, args = getopt.getopt(sys.argv[1:], "o:N")
 
 adb_args = "adb logcat -v threadtime"
 if len(args) != 0:
@@ -129,6 +133,10 @@ for arg in args:
 for opt, para in opts:
     if opt == "-o":
         adb_args += " | tee " + para
+
+for opt, para in opts:
+    if opt == "-N":
+        native = 1
 
 # if someone is piping in to us, use stdin as input.  if not, invoke adb logcat
 if os.isatty(sys.stdin.fileno()):
@@ -146,6 +154,11 @@ while True:
     if not match is None:
         date, time, owner, tid, tagtype, label, tag, message = match.groups()
         linebuf = StringIO.StringIO()
+
+        # time info
+        if TIME_WIDTH > 0:
+            date = (date + " " + time).strip().center(TIME_WIDTH)
+            linebuf.write("%s%s%s " % (format(fg=BLACK, bg=BLACK, bright=True), date, format(reset=True)))
 
         # center process info
         if PROCESS_WIDTH > 0:
