@@ -74,6 +74,8 @@ call pathogen#infect()
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 " Highlight Directory
 highlight Directory ctermfg=lightblue
+" Set default width of file explorer window
+let g:NERDTreeWinSize=40
 
 " # NERDTreeTabs
 " Auto tabes on start
